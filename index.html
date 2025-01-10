@@ -88,6 +88,43 @@
             width: 100%;
         }
 
+        .image-container {
+            position: relative;
+            display: inline-block;
+            width: 100%;
+        }
+
+        .image-container img {
+            max-width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        .image-switch-btn {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background-color: rgba(0, 0, 0, 0.5);
+            color: white;
+            border: none;
+            padding: 10px;
+            cursor: pointer;
+            font-size: 18px;
+            z-index: 10;
+        }
+
+        .left-btn {
+            left: 10px;
+        }
+
+        .right-btn {
+            right: 10px;
+        }
+
+        .image-switch-btn:hover {
+            background-color: rgba(0, 0, 0, 0.7);
+        }
+
         @media (max-width: 600px) {
             nav ul {
                 flex-direction: column;
@@ -117,13 +154,21 @@
         <section id="services" style="display:block;">
             <h2>服务项目</h2>
             <p>提供各类游戏代练服务，包括但不限于MMORPG、MOBA、FPS等。</p>
-            <img src="641.jpg" alt="WORLDS 2024 Champions T1" style="max-width:100%;height:auto;">
+            <div class="image-container">
+                <img id="service-img" src="img/641.jpg" alt="WORLDS 2024 Champions T1">
+                <button class="image-switch-btn left-btn" onclick="switchImage('service-img', -1)">←</button>
+                <button class="image-switch-btn right-btn" onclick="switchImage('service-img', 1)">→</button>
+            </div>
         </section>
 
         <section id="about" style="display:none;">
             <h2>关于我们</h2>
             <p>我们是专业的代练团队，拥有多年的游戏代练经验。</p>
-            <img src="641.jpg" alt="WORLDS 2024 Champions T1" style="max-width:100%;height:auto;">
+            <div class="image-container">
+                <img id="about-img" src="img/641.jpg" alt="WORLDS 2024 Champions T1">
+                <button class="image-switch-btn left-btn" onclick="switchImage('about-img', -1)">←</button>
+                <button class="image-switch-btn right-btn" onclick="switchImage('about-img', 1)">→</button>
+            </div>
         </section>
 
         <section id="contact" style="display:none;">
@@ -133,7 +178,11 @@
                 <li>电话：123-456-7890</li>
                 <li>邮箱：contact@dailian.com</li>
             </ul>
-            <img src="641.jpg" alt="WORLDS 2024 Champions T1" style="max-width:100%;height:auto;">
+            <div class="image-container">
+                <img id="contact-img" src="img/641.jpg" alt="WORLDS 2024 Champions T1">
+                <button class="image-switch-btn left-btn" onclick="switchImage('contact-img', -1)">←</button>
+                <button class="image-switch-btn right-btn" onclick="switchImage('contact-img', 1)">→</button>
+            </div>
         </section>
     </main>
 
@@ -149,6 +198,24 @@
             });
             document.getElementById(sectionId).style.display = 'block'; // Show the selected section
         }
+
+		function switchImage(imageId, direction) {
+			var images = {
+				'service-img': ['img/641.jpg', 'img/642.jpg', 'img/643.png'],
+				'about-img': ['img/641.jpg', 'img/642.jpg', 'img/643.png'],
+				'contact-img': ['img/641.jpg', 'img/642.jpg', 'img/643.png']
+			};
+
+			var imgElement = document.getElementById(imageId);
+			var currentSrc = imgElement.getAttribute('src');  // 使用 getAttribute 获取 src 属性值
+			var imgArray = images[imageId];
+			var currentIndex = imgArray.indexOf(currentSrc);  // 直接用完整路径进行匹配
+			var nextIndex = (currentIndex + direction + imgArray.length) % imgArray.length;  // Calculate next index based on direction
+
+			imgElement.src = imgArray[nextIndex];
+		}
+
     </script>
 </body>
 </html>
+
