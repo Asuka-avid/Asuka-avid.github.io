@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=640, user-scalable=no">
+    <title>这船代</title>
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+            min-width: 640px;
+            display: flex;
+            justify-content: center;
+            background-color: #f1f5f9;
+        }
+
+        .container-fixed-center {
+            width: 640px;
+            background-color: white;
+            padding: 20px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            min-height: 100vh;
+        }
+
+        header {
+            background-color: #4a90e2;
+            color: white;
+            padding: 20px;
+            text-align: center;
+            font-weight: bold;
+            font-size: 18px;
+        }
+
+        .login-register {
+            margin-top: 20px;
+            padding: 15px;
+            border-radius: 8px;
+            background-color: #fff;
+            border: 1px solid #e0e0e0;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .login-register h3 {
+            text-align: center;
+            font-size: 18px;
+            color: #4a90e2;
+        }
+
+        .login-register input {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 14px;
+        }
+
+        .login-register button {
+            width: 100%;
+            padding: 12px;
+            background-color: #4a90e2;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        .login-register button:hover {
+            background-color: #357ab7;
+        }
+
+        .login-register p {
+            text-align: center;
+        }
+
+        .login-register a {
+            color: #4a90e2;
+        }
+    </style>
+</head>
+<body>
+    <div class="container-fixed-center">
+        <header>这船代</header>
+        <div class="login-register">
+            <h3>注册</h3>
+            <input type="text" id="username" placeholder="用户名" />
+            <input type="password" id="password" placeholder="密码" />
+            <input type="password" id="confirmPassword" placeholder="确认密码" />
+            <button onclick="register()">注册</button>
+            <p>已有账号？<a href="login.html">立即登录</a></p>
+        </div>
+    </div>
+
+    <script>
+        function register() {
+            const username = document.getElementById('username').value.trim();
+            const password = document.getElementById('password').value.trim();
+            const confirmPassword = document.getElementById('confirmPassword').value.trim();
+
+            // 检查表单是否完整
+            if (!username || !password || !confirmPassword) {
+                alert('请填写完整的注册信息！');
+                return;
+            }
+
+            // 检查两次密码是否一致
+            if (password !== confirmPassword) {
+                alert('两次密码输入不一致！');
+                return;
+            }
+
+            // 获取 LocalStorage 中的用户数据
+            const users = JSON.parse(localStorage.getItem('users')) || {};
+
+            // 检查用户名是否已存在
+            if (users[username]) {
+                alert('用户名已存在，请使用其他用户名！');
+                return;
+            }
+
+            // 保存用户数据到 LocalStorage
+            users[username] = password;
+            localStorage.setItem('users', JSON.stringify(users));
+
+            // 注册成功后跳转到登录页面
+            alert('注册成功，请登录！');
+            window.location.href = 'login.html'; 
+        }
+    </script>
+</body>
+</html>
